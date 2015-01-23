@@ -1,0 +1,76 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.io.*;
+
+import javax.swing.border.StrokeBorder;
+
+import org.apache.batik.dom.GenericDOMImplementation;
+import org.apache.batik.gvt.StrokeShapePainter;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+
+public class _10_HouseSVG {
+
+	public static void main(String[] args) throws IOException {
+
+		/*OutputStream os = new FileOutputStream("d:\\svgimg.html");
+		Writer wr = new OutputStreamWriter(os, "utf-8");
+		
+wr.write("<!DOCTYPE html><html><body><svg height=\"100\" width=\"100\">  <circle cx=\"50\" cy=\"50\" r=\"40\""
+		+ " stroke=\"black\" stroke-width=\"3\" fill=\"red\" />  Sorry, your browser does not support inline SVG.  </svg> </body></html>");
+
+*/
+		//Document doc = impl.createDocument("d:\\svgimg.html", "html", null);
+		//SVGGeneratorContext cnt = SVGGeneratorContext.createDefault(doc);
+		//cnt.setEmbeddedFontsOn(true);
+		
+		
+		
+//wr.write(String.valueOf(g2d));
+	    // Populate the document root with the generated SVG content.
+	    //Element root = doc.getDocumentElement();
+	    //g2d.getRoot(root);
+	    
+			DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
+	        Document document = domImpl.createDocument(null, "svg", null);
+
+	        // Create an instance of the SVG Generator
+	        SVGGraphics2D g2d = new SVGGraphics2D(document);
+	      
+	        Shape line = new Rectangle2D.Float(100,100,140,140);
+	        Shape line2 = new Line2D.Float(10,10,200,200);
+	        StrokeShapePainter sh=new StrokeShapePainter(line);
+	        sh.setPaint(Color.black);
+	        
+	        Shape circle = new Ellipse2D.Double(0, 0, 50, 50);
+				g2d.setPaint(Color.red);
+				g2d.fill(circle);
+				g2d.translate(60, 0);
+				g2d.setPaint(Color.black);
+				g2d.fill(circle);
+				g2d.translate(60, 0);
+				g2d.setPaint(Color.black);
+				g2d.fill(circle);
+				g2d.draw(line2);
+				g2d.setColor(Color.white);
+				g2d.fill(line);
+				g2d.draw(line);
+				g2d.setSVGCanvasSize(new Dimension(1580, 1550));
+	        
+
+	        // Write svg file
+	        OutputStream outputStream = new FileOutputStream("d:\\house.html");
+	        Writer out = new OutputStreamWriter(outputStream, "UTF-8");
+	        g2d.stream(out, true /* use css */);						
+	        outputStream.flush();
+	        outputStream.close();
+	    
+	}
+
+}

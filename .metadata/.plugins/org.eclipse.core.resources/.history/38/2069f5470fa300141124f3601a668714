@@ -1,0 +1,91 @@
+import java.io.*;
+
+import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+public class _10_HouseSVG {
+
+	public static void main(String[] args) throws IOException {
+
+		/*OutputStream os = new FileOutputStream("d:\\svgimg.html");
+		Writer wr = new OutputStreamWriter(os, "utf-8");
+		
+wr.write("<!DOCTYPE html><html><body><svg height=\"100\" width=\"100\">  <circle cx=\"50\" cy=\"50\" r=\"40\""
+		+ " stroke=\"black\" stroke-width=\"3\" fill=\"red\" />  Sorry, your browser does not support inline SVG.  </svg> </body></html>");
+
+*/
+		//Document doc = impl.createDocument("d:\\svgimg.html", "html", null);
+		//SVGGeneratorContext cnt = SVGGeneratorContext.createDefault(doc);
+		//cnt.setEmbeddedFontsOn(true);
+		
+		
+		
+//wr.write(String.valueOf(g2d));
+	    // Populate the document root with the generated SVG content.
+	    //Element root = doc.getDocumentElement();
+	    //g2d.getRoot(root);
+		int linesCount = 6;
+		int cellSize = 50;
+			DOMImplementation domImpl = SVGDOMImplementation.getDOMImplementation();
+			String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+	        Document document = domImpl.createDocument(svgNS, "svg", null);
+	        
+	        // Create an instance of the SVG Generator
+	        SVGGraphics2D g2d = new SVGGraphics2D(document);
+				
+	        Element root = document.getDocumentElement();
+	        root.setAttributeNS(null , "width", "300");
+	        root.setAttributeNS(null , "height", "350");
+	        root.setAttributeNS(null , "style", "display:block;margin:auto");
+	        int numbers = 10;
+	        Element e;
+	        for (int i = 40; i < linesCount * cellSize; i+=cellSize) {
+	        	e = document.createElementNS(svgNS, "text");
+	        	e.setTextContent(String.valueOf(numbers));
+		        e.setAttributeNS(null, "x", String.valueOf(i));
+		        e.setAttributeNS(null,  "y", "0");
+		        e.setAttributeNS(null, "style",  "stroke:blue;stroke-width:0.5;stroke-dasharray:1,1");
+		        root.appendChild(e);
+		        numbers += 2.5;
+		        
+				e = document.createElementNS(svgNS, "line");
+		        e.setAttributeNS(null, "x1", String.valueOf(i));
+		        e.setAttributeNS(null,  "y1", "50");
+		        e.setAttributeNS(null, "x2",  String.valueOf(i));
+		        e.setAttributeNS(null, "y2", "350");
+		        e.setAttributeNS(null, "style",  "stroke:blue;stroke-width:0.5;stroke-dasharray:1,1");
+		        root.appendChild(e);
+			}
+	        
+	        for (int i = 50; i <= linesCount * cellSize; i+=cellSize) {
+				e = document.createElementNS(svgNS, "line");
+		        e.setAttributeNS(null, "x1", "30");
+		        e.setAttributeNS(null,  "y1", String.valueOf(i + cellSize / 2));
+		        e.setAttributeNS(null, "x2",  "300");
+		        e.setAttributeNS(null, "y2",  String.valueOf(i + cellSize / 2));
+		        e.setAttributeNS(null, "style",  "stroke:blue;stroke-width:0.5;stroke-dasharray:1,1");
+		        root.appendChild(e);
+			}
+	        
+	        e = document.createElementNS(svgNS, "rect");
+	        e.setAttributeNS(null, "x", "125");
+	        e.setAttributeNS(null,  "y", "85");
+	        e.setAttributeNS(null, "width",  "50");
+	        e.setAttributeNS(null, "height", "50");
+	        e.setAttributeNS(null, "style",  "fill:gray;opacity: 0.4;stroke:blue;stroke-width:2");
+	        root.appendChild(e);
+
+	        // Write svg file
+	        OutputStream outputStream = new FileOutputStream("d:\\house.html");
+	        Writer out = new OutputStreamWriter(outputStream, "UTF-8");
+	         g2d.stream(root, out, true,false);
+	       // g2d.stream(out, true /* use css */);				
+	        outputStream.flush();
+	        outputStream.close();
+	    
+	}
+
+}
