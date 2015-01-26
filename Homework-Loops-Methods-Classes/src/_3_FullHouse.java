@@ -17,7 +17,7 @@ public class _3_FullHouse {
 							
 							for (int m = 0; m < suits.length; m++) {
 								for (int z = m + 1; z < suits.length; z++) {
-									fullHouseCount++;
+									fullHouseCount++;									
 									System.out.print("(" + faces[i] + suits[j] + " " + faces[i] + suits[k] + " " + faces[i] + suits[l] + 
 											" " + faces[n] + suits[m] + " " + faces[n] + suits[z] + ") ");
 								}
